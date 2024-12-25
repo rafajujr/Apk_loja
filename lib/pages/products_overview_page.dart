@@ -25,6 +25,7 @@ class ProductsOverviewPage extends StatefulWidget {
 
 class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
   bool _isLoading = true;
+  bool _showFavoriteOnly = false;
 
   @override
   void initState() {
@@ -32,7 +33,7 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
     Provider.of<ProductList>(
       context,
       listen: false,
-    ).loadproducts().then(
+    ).loadProducts().then(
           (value) => setState(
             () {
               _isLoading = false;
@@ -73,9 +74,9 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
             ],
             onSelected: (Filteroptions selectdValue) {
               if (selectdValue == Filteroptions.Favorite) {
-                provider.showFavoriteOnly();
+                _showFavoriteOnly = true;
               } else {
-                provider.showAll();
+                _showFavoriteOnly = false;
               }
             },
           ),

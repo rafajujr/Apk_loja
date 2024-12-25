@@ -12,7 +12,7 @@ class ProductsPage extends StatelessWidget {
     return Provider.of<ProductList>(
       context,
       listen: false,
-    ).loadproducts();
+    ).loadProducts();
   }
 
   @override
@@ -43,10 +43,10 @@ class ProductsPage extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8),
           child: ListView.builder(
-            itemCount: products.itemsCount(),
+            itemCount: products.itemsCount,
             itemBuilder: (ctx, i) => Column(
               children: [
-                ProductItem(products.itmes[i]),
+                ProductItem(products.items[i]),
                 const Divider(),
               ],
             ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop/models/auth.dart';
 import 'package:shop/models/cart.dart';
 import 'package:shop/models/product.dart';
 
@@ -13,6 +14,7 @@ class ProductGridItem extends StatelessWidget {
     final product = Provider.of<Product>(context, listen: false);
     final cart = Provider.of<Cart>(context);
     final msg = ScaffoldMessenger.of(context);
+    final auth = Provider.of<Auth>(context, listen: false);
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
@@ -22,7 +24,8 @@ class ProductGridItem extends StatelessWidget {
           leading: Consumer<Product>(
             builder: (context, product, _) => IconButton(
               onPressed: () async {
-                final response = await product.toggleFavorite();
+                final response = await product.toggleFavorite(
+                    auth.token.toString(), auth.userId ?? '');
                 if (response == false) {
                   msg.showSnackBar(const SnackBar(
                     content: Text(
@@ -70,10 +73,20 @@ class ProductGridItem extends StatelessWidget {
               arguments: product,
             );
           },
+          child: Hero(
+            tag: product.id,
+            child: FadeInImage(
+              placeholder:
+                  const AssetImage('assets/images/imagem_loading.jpg.jpg'),
+              image: NetworkImage(product.imageUrl),
+              fit: BoxFit.cover,
+            ),
+          ),
+          /*
           child: Image.network(
             product.imageUrl,
             fit: BoxFit.cover,
-          ),
+          ),*/
         ),
       ),
     );

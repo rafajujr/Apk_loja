@@ -9,22 +9,54 @@ class ProductDetailPage extends StatelessWidget {
     final Product product =
         ModalRoute.of(context)!.settings.arguments as Product;
     return Scaffold(
-      appBar: AppBar(
-        title: Text(product.name),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 300,
-              width: double.infinity,
-              child: Image.network(product.imageUrl),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            expandedHeight: 300,
+            pinned: true,
+            flexibleSpace: FlexibleSpaceBar(
+              title: GridTileBar(
+                backgroundColor: const Color.fromARGB(0, 0, 0, 0),
+                title: Text(
+                  product.name,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+              background: Stack(
+                fit: StackFit.expand,
+                children: [
+                  Hero(
+                    tag: product.id,
+                    child: Image.network(product.imageUrl),
+                  ),
+                  const DecoratedBox(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment(0, 0.8),
+                        end: Alignment(0, 0),
+                        colors: [
+                          Color.fromRGBO(0, 0, 0, 0.6),
+                          Color.fromRGBO(0, 0, 0, 0),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
+          ),
+          SliverList(
+              delegate: SliverChildListDelegate([
             const SizedBox(
               height: 10,
             ),
             Text(
               'R\$ ${product.price}',
+              textAlign: TextAlign.center,
               style: const TextStyle(
                 color: Colors.grey,
                 fontSize: 20,
@@ -40,8 +72,8 @@ class ProductDetailPage extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             )
-          ],
-        ),
+          ]))
+        ],
       ),
     );
   }

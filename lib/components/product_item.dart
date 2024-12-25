@@ -13,7 +13,7 @@ class ProductItem extends StatelessWidget {
     final msg = ScaffoldMessenger.of(context);
     return ListTile(
       onTap: () {
-        Provider.of<ProductList>(context, listen: false).loadproducts();
+        Provider.of<ProductList>(context, listen: false).loadProducts();
       },
       leading: CircleAvatar(
         backgroundImage: NetworkImage(product.imageUrl),
